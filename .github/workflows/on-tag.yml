@@ -1,0 +1,33 @@
+name: On tag
+on:
+  push:
+    tags: '*'
+  workflow_dispatch:
+
+jobs:
+  pre_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+  build_docker:
+    name: "Build Container"
+    uses: ./.github/workflows/callable-build-docker.yml
+    secrets: inherit
+    with:
+      sha: ${{ github.sha }}
+
+  deploy_env_stg:
+    name: "Deploy to stg environment"
+    uses: ./.github/workflows/callable-deploy-ecs.yml
+    secrets: inherit
+    with:
+      sha: ${{ github.sha }}
+
+  deploy-pages:
+    name: "Publish gh-pages"
+    uses: ./.github/workflows/callable-deploy-ghpages.yml
+    secrets: inherit

@@ -1,0 +1,19 @@
+name: "Deploy ECS"
+on:
+  workflow_call:
+    inputs:
+      ENV_CODE:
+        description: Target environment of deployment. (stg, prod)
+        required: true
+        type: string
+      target_image_tag:
+        description: 'The git sha to deploy'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
