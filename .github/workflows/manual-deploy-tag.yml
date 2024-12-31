@@ -1,0 +1,29 @@
+name: 'Manually deploy tag'
+on:
+  workflow_dispatch:
+    inputs:
+      
+
+jobs:
+  pre-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+  build-docker:
+    name: "Build Container"
+    uses: ./.github/workflows/callable-build-docker.yml
+    secrets: inherit
+    with:
+      sha: ${{ github.sha }}
+
+  deploy-env-stg:
+    name: "Deploy to stg environment"
+    uses: ./.github/workflows/callable-deploy-ecs.yml
+    secrets: inherit
+    with:
+      ENV_CODE: stg
+      target_image_tag: ${{ github.sha }}
