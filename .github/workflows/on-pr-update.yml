@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build-docker:
-    name: "Build Container"
+    name: "Build"
     uses: ./.github/workflows/callable-build-docker.yml
     secrets: inherit
     with:

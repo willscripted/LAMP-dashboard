@@ -12,7 +12,7 @@ concurrency:
 jobs:
 
   build-docker:
-    name: "Build & Push Docker Image"
+    name: "Build"
     uses: ./.github/workflows/callable-build-docker.yml
     secrets: inherit
     with:

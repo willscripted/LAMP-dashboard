@@ -20,7 +20,7 @@ jobs:
   # first trialing them in lower environments.
 
   validate:
-    name: "Validate sha"
+    name: "Validate Inputs"
     runs-on: ubuntu-24.04
     steps:
       - name: Verify not production
@@ -70,7 +70,7 @@ jobs:
           git cat-file commit ${{ inputs.sha }}
 
   build-docker:
-    name: "Build Container"
+    name: "Build"
     uses: ./.github/workflows/callable-build-docker.yml
     secrets: inherit
     with:
