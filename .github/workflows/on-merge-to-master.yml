@@ -19,7 +19,7 @@ jobs:
       push: true
 
   deploy-env-stg:
-    name: "Deploy in Staging"
+    name: "Deploy Staging"
     uses: ./.github/workflows/callable-deploy-ecs.yml
     secrets: inherit
     with:
